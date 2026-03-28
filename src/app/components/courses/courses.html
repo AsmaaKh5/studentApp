@@ -1,0 +1,44 @@
+<div class="container mt-4">
+   <div class="mb-4">
+    <label>Filter by Category:</label>
+    <select class="form-select" [(ngModel)]="selectedCategory">
+      <option value="All">All</option>
+      <option value="Programming">Programming</option>
+      <option value="Design">Design</option>
+      <option value="Marketing">Marketing</option>
+      <option value="Business">Business</option>
+    </select>
+  </div>
+
+  <div class="row">
+     @for (item of courses; track item.id) {
+      @if (selectedCategory === 'All' || item.category === selectedCategory) {
+        <div class="col-md-4 mb-3">
+           <div class="card" [ngStyle]="{'background-color': item.seats <= 2 && item.seats > 0 ? 'lightyellow' : 'white'}">
+            
+             <img [src]="item.image" class="card-img-top" alt="Course Image">
+
+             <div class="card-body" [ngClass]="{'text-danger': item.seats === 0}">
+               <h5 class="card-title">{{ item.title }}</h5>
+              <p>Instructor: {{ item.instructor }}</p>
+              <p>Price: {{ item.price | currency }}</p>
+              <p>Seats Available: {{ item.seats }}</p>
+
+               @if (item.seats === 0) {
+                <p class="badge bg-danger">Course Full</p>
+              } @else if (item.seats <= 2) {
+                <p class="text-warning">Almost Full</p>
+              }
+
+               <button class="btn btn-primary" 
+                      (click)="register(item)" 
+                      [disabled]="item.seats === 0">
+                Register
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>

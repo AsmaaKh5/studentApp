@@ -16,7 +16,7 @@ import { Component } from '@angular/core';
 })
 export class StudentData {  
   students: Student[] = [
-    { id: 1, name: 'Ahmed Mohammed', age: 20, photoUrl: 'https://picsum.photos/200'},
-    { id: 2, name: 'Sara Ahmed', age: 22, photoUrl: 'https://picsum.photos/200'}
+    { id: 1, name: 'Ahmed Mohammed', age: 20, photoUrl: 'https://picsum.photos/200?random=1'},
+    { id: 2, name: 'Sara Ahmed', age: 22, photoUrl: 'https://picsum.photos/200?random=2'}
   ];
 }
