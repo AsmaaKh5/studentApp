@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { DiscountPipe } from '../../pipes/discount-pipe';
+import { DisableAfterClickDirective } from '../../directives/disable-after-click';
 
 export interface Course {
   id: number;
@@ -15,13 +17,13 @@ export interface Course {
 @Component({
   selector: 'app-courses',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, DiscountPipe, DisableAfterClickDirective],
   templateUrl: './courses.html',
   styleUrl: './courses.css'
 })
-// تأكدي من هذا السطر 👇 يجب أن يكون Courses بالضبط
-export class Courses { 
+export class Courses {
   selectedCategory: string = 'All';
+  discountValue: number = 10;
 
   courses: Course[] = [
     { id: 1, title: 'Angular Basics', instructor: 'Mona', price: 500, seats: 5, image: 'https://picsum.photos/400/200?random=1', category: 'Programming' },

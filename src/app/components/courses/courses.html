@@ -1,5 +1,6 @@
 <div class="container mt-4">
-   <div class="mb-4">
+
+  <div class="mb-4">
     <label>Filter by Category:</label>
     <select class="form-select" [(ngModel)]="selectedCategory">
       <option value="All">All</option>
@@ -10,28 +11,35 @@
     </select>
   </div>
 
+  <div class="mb-4">
+    <label>Discount Percentage:</label>
+    <input type="number" class="form-control" [(ngModel)]="discountValue" min="0" max="100">
+  </div>
+
   <div class="row">
-     @for (item of courses; track item.id) {
+    @for (item of courses; track item.id) {
       @if (selectedCategory === 'All' || item.category === selectedCategory) {
         <div class="col-md-4 mb-3">
-           <div class="card" [ngStyle]="{'background-color': item.seats <= 2 && item.seats > 0 ? 'lightyellow' : 'white'}">
-            
-             <img [src]="item.image" class="card-img-top" alt="Course Image">
+          <div class="card" [ngStyle]="{'background-color': item.seats <= 2 && item.seats > 0 ? 'lightyellow' : 'white'}">
 
-             <div class="card-body" [ngClass]="{'text-danger': item.seats === 0}">
-               <h5 class="card-title">{{ item.title }}</h5>
+            <img [src]="item.image" class="card-img-top" alt="Course Image">
+
+            <div class="card-body" [ngClass]="{'text-danger': item.seats === 0}">
+              <h5 class="card-title">{{ item.title }}</h5>
               <p>Instructor: {{ item.instructor }}</p>
-              <p>Price: {{ item.price | currency }}</p>
+              <p>Original Price: {{ item.price | currency }}</p>
+              <p>Price After Discount: {{ item.price | discount:discountValue | currency }}</p>
               <p>Seats Available: {{ item.seats }}</p>
 
-               @if (item.seats === 0) {
+              @if (item.seats === 0) {
                 <p class="badge bg-danger">Course Full</p>
               } @else if (item.seats <= 2) {
                 <p class="text-warning">Almost Full</p>
               }
 
-               <button class="btn btn-primary" 
-                      (click)="register(item)" 
+              <button class="btn btn-primary"
+                      appDisableAfterClick
+                      (click)="register(item)"
                       [disabled]="item.seats === 0">
                 Register
               </button>
