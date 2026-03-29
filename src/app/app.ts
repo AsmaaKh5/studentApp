@@ -1,16 +1,18 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-
-import { Courses } from './components/courses/courses'; 
-import { StudentData } from './components/student/student'; 
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Courses, StudentData ], 
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
   title = 'studentApp';
+  isNavCollapsed = true;
+
+  toggleNav(): void {
+    this.isNavCollapsed = !this.isNavCollapsed;
+  }
 }

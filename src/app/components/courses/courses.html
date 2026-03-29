@@ -1,18 +1,17 @@
 <div class="container mt-4">
 
   <div class="mb-4">
-    <label>Filter by Category:</label>
+    <label class="form-label fw-bold">Filter by Category:</label>
     <select class="form-select" [(ngModel)]="selectedCategory">
       <option value="All">All</option>
-      <option value="Programming">Programming</option>
-      <option value="Design">Design</option>
-      <option value="Marketing">Marketing</option>
-      <option value="Business">Business</option>
+      @for (cat of categories; track cat.id) {
+        <option [value]="cat.name">{{ cat.name }}</option>
+      }
     </select>
   </div>
 
   <div class="mb-4">
-    <label>Discount Percentage:</label>
+    <label class="form-label fw-bold">Discount Percentage:</label>
     <input type="number" class="form-control" [(ngModel)]="discountValue" min="0" max="100">
   </div>
 
@@ -20,24 +19,27 @@
     @for (item of courses; track item.id) {
       @if (selectedCategory === 'All' || item.category === selectedCategory) {
         <div class="col-md-4 mb-3">
-          <div class="card" [ngStyle]="{'background-color': item.seats <= 2 && item.seats > 0 ? 'lightyellow' : 'white'}">
+          <div class="card h-100 shadow-sm"
+               [ngStyle]="{'background-color': item.seats <= 2 && item.seats > 0 ? 'lightyellow' : 'white'}">
 
             <img [src]="item.image" class="card-img-top" alt="Course Image">
 
             <div class="card-body" [ngClass]="{'text-danger': item.seats === 0}">
               <h5 class="card-title">{{ item.title }}</h5>
-              <p>Instructor: {{ item.instructor }}</p>
-              <p>Original Price: {{ item.price | currency }}</p>
-              <p>Price After Discount: {{ item.price | discount:discountValue | currency }}</p>
-              <p>Seats Available: {{ item.seats }}</p>
+              <p class="mb-1">Instructor: {{ item.instructor }}</p>
+              <p class="mb-1">Original Price: {{ item.price | currency }}</p>
+              <p class="mb-1">After Discount: {{ item.price | discount:discountValue | currency }}</p>
+              <p class="mb-1">Seats Available: {{ item.seats }}</p>
 
               @if (item.seats === 0) {
-                <p class="badge bg-danger">Course Full</p>
+                <span class="badge bg-danger">Course Full</span>
               } @else if (item.seats <= 2) {
-                <p class="text-warning">Almost Full</p>
+                <p class="text-warning fw-bold"> Almost Full</p>
               }
+            </div>
 
-              <button class="btn btn-primary"
+            <div class="card-footer">
+              <button class="btn btn-primary w-100"
                       appDisableAfterClick
                       (click)="register(item)"
                       [disabled]="item.seats === 0">

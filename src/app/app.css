@@ -1,0 +1,9 @@
+.navbar .nav-link.active {
+  color: #ffc107 !important;
+  font-weight: bold;
+  border-bottom: 2px solid #ffc107;
+}
+
+.navbar-brand {
+  font-size: 1.4rem;
+}
